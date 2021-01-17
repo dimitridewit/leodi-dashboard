@@ -1,0 +1,36 @@
+<h1 class="title">Listing Recipes</h1>
+
+<div class="columns">
+  <div class="column">
+    <table class="table is-fullwidth">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Description</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+    <%= for recipe <- @recipes do %>
+        <tr>
+          <td><%= recipe.name %></td>
+          <td><%= recipe.description %></td>
+          <td>
+            <span>
+              <%= link "Show", to: Routes.recipe_path(@conn, :show, recipe), class: "button is-primary" %>
+            </span>
+            <span>
+              <%= link "Edit", to: Routes.recipe_path(@conn, :edit, recipe), class: "button" %>
+            </span>
+            <span>
+              <%= link "Delete", to: Routes.recipe_path(@conn, :delete, recipe), method: :delete, data: [confirm: "Are you sure?"], class: "button is-danger" %>
+            </span>
+          </td>
+        </tr>
+    <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<%= link "New Recipe", to: Routes.recipe_path(@conn, :new), class: "button is-primary" %>
