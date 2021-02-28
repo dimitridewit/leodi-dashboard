@@ -27,20 +27,8 @@ defmodule LeodiDashboard.Meal.Recipe do
   def changeset(recipe, attrs) do
     recipe
     |> cast(attrs, [:name, :url, :description])
-    |> put_assoc(:ingredients, load_ingredients(attrs))
     |> validate_required([:name, :url, :description])
+    |> foreign_key_constraint(:recipe_ingredients_recipe_id_fkey)
     |> unique_constraint(:name)
-  end
-
-  def load_ingredients(params) do
-    IO.inspect params
-    case params["ingredients"] || [] do
-      [] -> []
-      ids ->
-        Repo.all(
-          from i in Ingredient,
-          where: i.id in ^ids
-        )
-    end
   end
 end

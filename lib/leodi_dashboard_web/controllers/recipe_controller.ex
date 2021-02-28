@@ -17,7 +17,7 @@ defmodule LeodiDashboardWeb.RecipeController do
   end
 
   def create(conn, %{"recipe" => recipe_params}) do
-    case Meal.create_recipe(recipe_params) do
+    case Meal.create_recipe(filter_ingredients(recipe_params)) do
       {:ok, recipe} ->
         conn
         |> put_flash(:info, "Recipe created successfully.")
@@ -30,7 +30,13 @@ defmodule LeodiDashboardWeb.RecipeController do
 
   def show(conn, %{"id" => id}) do
     recipe = Meal.get_recipe!(id)
-    render(conn, "show.html", recipe: recipe, ingredients: [])
+    recipe_ingredients = Meal.get_recipe_ingredients!(recipe)
+    render(
+      conn,
+      "show.html",
+      recipe: recipe,
+      recipe_ingredients: recipe_ingredients
+    )
   end
 
   def edit(conn, %{"id" => id}) do
@@ -44,9 +50,8 @@ defmodule LeodiDashboardWeb.RecipeController do
   def update(conn, %{"id" => id, "recipe" => recipe_params}) do
     recipe = Meal.get_recipe!(id)
 
-    case Meal.update_recipe(recipe, recipe_params) do
-      {:ok, recipe} ->
-
+    case Meal.update_recipe_with_ingredients(recipe, filter_ingredients(recipe_params)) do
+      {:ok, %{recipe: recipe}} ->
         conn
         |> put_flash(:info, "Recipe updated successfully.")
         |> redirect(to: Routes.recipe_path(conn, :show, recipe))
@@ -65,4 +70,22 @@ defmodule LeodiDashboardWeb.RecipeController do
     |> put_flash(:info, "Recipe deleted successfully.")
     |> redirect(to: Routes.recipe_path(conn, :index))
   end
+
+  defp filter_ingredients(%{"ingredients" => ingredients} = params) when is_map(ingredients) do
+    updated_ingredients =
+      ingredients
+      |> Enum.filter(fn {key, values} ->
+        if values["picked"] do
+          true
+        else
+          false
+        end
+      end)
+      |> IO.inspect
+
+    params |> Map.put("ingredients", updated_ingredients)
+  end
+
+  defp filter_ingredients(params), do: params
+
 end

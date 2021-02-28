@@ -4,7 +4,8 @@ defmodule LeodiDashboardWeb.Router do
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
-    plug :fetch_flash
+    plug :fetch_live_flash
+    plug :put_root_layout, {LeodiDashboardWeb.LayoutView, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
   end
@@ -18,8 +19,15 @@ defmodule LeodiDashboardWeb.Router do
 
     get "/", PageController, :index
 
-    resources "/recipes", RecipeController
+    get "/recipes", RecipeController, :index
+    get "/recipes/new", RecipeController, :new
+    get "/recipes/:id", RecipeController, :show
+    delete "/recipes/:id", RecipeController, :delete
+
+    live "/recipes/:id/edit", RecipeLive.Edit, :edit
+
     resources "/ingredients", IngredientController
+    resources "/recipe-ingredients", RecipeIngredientController, only: [:delete]
   end
 
   # Other scopes may use custom stacks.

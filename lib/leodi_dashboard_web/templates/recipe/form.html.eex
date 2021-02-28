@@ -33,13 +33,16 @@
     </div>
 
     <div class="column panel">
-      <h2>Ingredienten</h2>
-      <%= multiselect_ingredients(f,
-          :ingredients,
-          Enum.map(@ingredients, fn i -> {i.name, i.id} end),
-          selected: Enum.map(@recipe.ingredients, &(&1.id))
-        )
-      %>
+      <%= if assigns[:recipe] do %>
+        <h2>Ingredienten</h2>
+        <%=
+          multiselect_ingredients(f,
+            :ingredients,
+            Enum.map(@ingredients, fn i -> {i.name, i.id} end),
+            selected: Enum.map(@recipe.ingredients, &(&1.id))
+          )
+        %>
+        <% end %>
   </div>
 
   <div class="field">

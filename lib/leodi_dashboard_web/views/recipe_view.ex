@@ -1,12 +1,21 @@
 defmodule LeodiDashboardWeb.RecipeView do
   use LeodiDashboardWeb, :view
 
+  def link_recipe_ingredients(ingredients, recipe_ingredients) do
+    Enum.map(recipe_ingredients, fn r_i ->
+      i = ingredients |> Enum.find(&(&1.id == r_i.ingredient_id))
+
+      r_i
+      |> Map.merge(Map.take(i, [:name]))
+    end)
+  end
+
   def multiselect_ingredients(form, field, options, opts \\ []) do
     {selected, _} = get_selected_values(form, field, opts)
     selected_as_strings = Enum.map(selected, &"#{&1}")
 
     for {value, key} <- options, into: [] do
-      content_tag(:label, class: "checkbox-inline") do
+      checkbox = content_tag(:label, class: "label") do
         [
           tag(:input,
             name: input_name(form, field) <> "[]",
@@ -18,7 +27,26 @@ defmodule LeodiDashboardWeb.RecipeView do
           value
         ]
       end
+
+      amount = content_tag(:label, class: "label") do
+        [
+          tag(:input,
+            name: "recipe[ingredients][#{key}][amount]",
+            id: "recipe_ingredients_amount"
+          )
+        ]
+      end
+
+      picked = tag(:input,
+        name: "recipe[ingredients][#{key}][picked]",
+        type: "checkbox",
+        id: "recipe_ingredients_picked"
+      )
+
+
+      [value, picked, amount]
     end
+
   end
 
   defp get_selected_values(form, field, opts) do

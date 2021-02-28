@@ -1,47 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>LeodiDashboard · Phoenix Framework</title>
-    <link rel="stylesheet" href="<%= Routes.static_path(@conn, "/css/app.css") %>"/>
-    <script defer type="text/javascript" src="<%= Routes.static_path(@conn, "/js/app.js") %>"></script>
-  </head>
-  <body>
-    <header>
-      <section>
-        <nav role="navigation" class="navbar" aria-label="main navigation">
-          <div class="navbar-brand">
-            <%= link to: Routes.recipe_path(@conn, :index) do %>
-              <div class="brand-wrapper">
-                <img src="<%= Routes.static_path(@conn, "/images/motto.png") %>" alt="Motto" />
-              </div>
-            <% end %>
-            <a class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbar-menu">
-              <span aria-hidden="true"></span>
-              <span aria-hidden="true"></span>
-              <span aria-hidden="true"></span>
-            </a>
-          </div>
-          <div id="navbar-menu" class="navbar-menu">
-            <div class="navbar-start">
-              <%= link "Recipes", to: Routes.recipe_path(@conn, :index), class: "navbar-item" %>
-              <%= link "Ingredients", to: Routes.ingredient_path(@conn, :index), class: "navbar-item" %>
-            </div>
-            <div class="navbar-end">
-              <%= if function_exported?(Routes, :live_dashboard_path, 2) do %>
-                <%= link "LiveDashboard", to: Routes.live_dashboard_path(@conn, :home), class: "button is-light navbar-item" %>
-              <% end %>
-            </div>
-          </div>
-        </nav>
-      </section>
-    </header>
-    <main role="main" class="container p-5">
-      <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
-      <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
-      <%= @inner_content %>
-    </main>
-  </body>
-</html>
+<main role="main" class="container p-5">
+  <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
+  <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
+  <%= @inner_content %>
+</main>

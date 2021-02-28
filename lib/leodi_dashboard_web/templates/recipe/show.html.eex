@@ -11,6 +11,7 @@
   </div>
 </div>
 
+<% ingredients = link_recipe_ingredients(@recipe.ingredients, @recipe_ingredients) %>
 <h2 class="subtitle">Ingredients</h2>
 <table class="table">
   <thead>
@@ -21,15 +22,13 @@
     </tr>
   </thead>
   <tbody>
-    <%= for ingredient <- @recipe.ingredients do %>
+    <%= for ingredient <- ingredients do %>
       <tr>
         <td><%= ingredient.name %></td>
-        <td>x</td>
-        <td>x</td>
+        <td><%= ingredient.amount %></td>
+        <td><%= ingredient.unit %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
-<%= link "Edit", to: Routes.recipe_path(@conn, :edit, @recipe), class: "button" %>
-<%= link "Back", to: Routes.recipe_path(@conn, :index), class: "button" %>
