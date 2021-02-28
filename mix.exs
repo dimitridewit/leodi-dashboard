@@ -10,7 +10,8 @@ defmodule LeodiDashboard.MixProject do
       compilers: [:phoenix, :gettext] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
-      deps: deps()
+      deps: deps(),
+      build_embedded: Mix.env == :prod
     ]
   end
 
