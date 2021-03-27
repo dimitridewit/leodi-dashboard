@@ -12,10 +12,6 @@ use Mix.Config
 config :leodi_dashboard, LeodiDashboardWeb.Endpoint,
   cache_static_manifest: "priv/static/cache_manifest.json"
 
-config http: [port: {:system, "PORT"}],
-  url: [scheme: "https", host: "limitless-gorge-85578.herokuapp.com", port: 443],
-  force_ssl: [rewrite_on: [:x_forwarded_proto]],
-
 # Do not print debug messages in production
 config :logger, level: :info
 
