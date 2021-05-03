@@ -28,7 +28,7 @@ defmodule LeodiDashboardWeb.Router do
     pipe_through :browser
     pipe_through :session
 
-    pow_routes()
+    pow_session_routes()
   end
 
   scope "/", LeodiDashboardWeb do
