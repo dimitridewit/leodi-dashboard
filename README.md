@@ -18,3 +18,12 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
   * Docs: https://hexdocs.pm/phoenix
   * Forum: https://elixirforum.com/c/phoenix-forum
   * Source: https://github.com/phoenixframework/phoenix
+
+## Deployment
+Deployment is done with a free tier Gigalixir setup
+[https://gigalixir.readthedocs.io/en/latest/getting-started-guide.html
+](https://gigalixir.readthedocs.io/en/latest/getting-started-guide.html
+)
+
+## Migrations
+gigalixir run mix ecto.migrate -a $APP_NAME
