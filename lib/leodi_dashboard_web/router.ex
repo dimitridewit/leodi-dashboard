@@ -11,6 +11,10 @@ defmodule LeodiDashboardWeb.Router do
     plug :put_secure_browser_headers
   end
 
+  pipeline :session do
+    plug :put_root_layout, {LeodiDashboardWeb.LayoutView, "session.html"}
+  end
+
   pipeline :api do
     plug :accepts, ["json"]
   end
@@ -22,6 +26,7 @@ defmodule LeodiDashboardWeb.Router do
 
   scope "/" do
     pipe_through :browser
+    pipe_through :session
 
     pow_routes()
   end
