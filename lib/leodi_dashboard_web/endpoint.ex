@@ -51,5 +51,6 @@ defmodule LeodiDashboardWeb.Endpoint do
   plug Plug.Head
   plug Plug.Session, @session_options
   plug Pow.Plug.Session, otp_app: :leodi_dashboard
+  plug PowPersistentSession.Plug.Cookie
   plug LeodiDashboardWeb.Router
 end

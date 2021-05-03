@@ -1,6 +1,8 @@
 defmodule LeodiDashboardWeb.Router do
   use LeodiDashboardWeb, :router
   use Pow.Phoenix.Router
+  use Pow.Extension.Phoenix.Router,
+    extensions: [PowPersistentSession]
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -29,6 +31,7 @@ defmodule LeodiDashboardWeb.Router do
     pipe_through :session
 
     pow_session_routes()
+    pow_extension_routes()
   end
 
   scope "/", LeodiDashboardWeb do

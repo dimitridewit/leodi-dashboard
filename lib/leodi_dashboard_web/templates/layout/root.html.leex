@@ -29,6 +29,9 @@
             <div class="navbar-start">
               <%= link "Recipes", to: Routes.recipe_path(@conn, :index), class: "navbar-item" %>
               <%= link "Ingredients", to: Routes.ingredient_path(@conn, :index), class: "navbar-item" %>
+              <%= if Pow.Plug.current_user(@conn) do %>
+                <%= link "Sign out", to: Routes.pow_session_path(@conn, :delete), method: :delete %></span>
+              <% end %>
             </div>
             <div class="navbar-end">
               <%= if function_exported?(Routes, :live_dashboard_path, 2) do %>
