@@ -31,6 +31,7 @@ defmodule LeodiDashboardWeb.RecipeController do
   def show(conn, %{"id" => id}) do
     recipe = Meal.get_recipe!(id)
     recipe_ingredients = Meal.get_recipe_ingredients!(recipe)
+
     render(
       conn,
       "show.html",
@@ -81,11 +82,10 @@ defmodule LeodiDashboardWeb.RecipeController do
           false
         end
       end)
-      |> IO.inspect
+      |> IO.inspect()
 
     params |> Map.put("ingredients", updated_ingredients)
   end
 
   defp filter_ingredients(params), do: params
-
 end

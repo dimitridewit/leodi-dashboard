@@ -11,7 +11,6 @@ defmodule LeodiDashboard.Meal do
   alias LeodiDashboard.Meal.Ingredient
   alias LeodiDashboard.Meal.RecipeIngredient
 
-
   @doc """
   Returns the list of recipes.
 
@@ -40,20 +39,21 @@ defmodule LeodiDashboard.Meal do
 
   """
   def get_recipe!(id) do
-    q = from(
-      i in Ingredient,
-      join: r_i in "recipe_ingredients",
-      on: i.id == r_i.ingredient_id
-    )
+    q =
+      from(
+        i in Ingredient,
+        join: r_i in "recipe_ingredients",
+        on: i.id == r_i.ingredient_id
+      )
 
     Repo.one(
       from r in Recipe,
-      preload: [ingredients: ^q],
-      where: r.id == ^id
+        preload: [ingredients: ^q],
+        where: r.id == ^id
     )
   end
 
-# query = from(m in Movie, join: a in assoc(m, :actors), preload: [actors: a])
+  # query = from(m in Movie, join: a in assoc(m, :actors), preload: [actors: a])
 
   @doc """
   Creates a recipe.
@@ -83,15 +83,17 @@ defmodule LeodiDashboard.Meal do
         NaiveDateTime.utc_now()
         |> NaiveDateTime.truncate(:second)
 
-      recipe_ingredients = Enum.map(ingredients, fn {ingredient_id, recipe_ingredient_attrs} ->
-        Map.merge(recipe_ingredient_attrs, %{
-          recipe_id: recipe.id,
-          ingredient_id: Type.to_integer(ingredient_id),
-          inserted_at: timestamp,
-          updated_at: timestamp
-        })
-      end)
-      {count, _ } = Repo.insert_all(RecipeIngredient, recipe_ingredients, on_conflict: :nothing)
+      recipe_ingredients =
+        Enum.map(ingredients, fn {ingredient_id, recipe_ingredient_attrs} ->
+          Map.merge(recipe_ingredient_attrs, %{
+            recipe_id: recipe.id,
+            ingredient_id: Type.to_integer(ingredient_id),
+            inserted_at: timestamp,
+            updated_at: timestamp
+          })
+        end)
+
+      {count, _} = Repo.insert_all(RecipeIngredient, recipe_ingredients, on_conflict: :nothing)
       {:ok, count}
     end)
     |> Repo.transaction()
@@ -122,7 +124,10 @@ defmodule LeodiDashboard.Meal do
   @doc """
   Updates a recipe and its ingredients
   """
-  def update_recipe_with_ingredients(%Recipe{id: recipe_id} = recipe, %{"ingredients" => ingredients} = attrs) do
+  def update_recipe_with_ingredients(
+        %Recipe{id: recipe_id} = recipe,
+        %{"ingredients" => ingredients} = attrs
+      ) do
     recipe_changeset = change_recipe(recipe, Map.delete(attrs, "ingredients"))
 
     Ecto.Multi.new()
@@ -132,20 +137,24 @@ defmodule LeodiDashboard.Meal do
         NaiveDateTime.utc_now()
         |> NaiveDateTime.truncate(:second)
 
-      recipe_ingredients = Enum.map(ingredients, fn {ingredient_id, recipe_ingredient_attrs} ->
-        %{
-          amount: recipe_ingredient_attrs["amount"],
-          recipe_id: recipe.id,
-          ingredient_id: Type.to_integer(ingredient_id),
-          inserted_at: timestamp,
-          updated_at: timestamp
-        }
-      end)
-      {count, _ } = Repo.insert_all(
-        RecipeIngredient,
-        recipe_ingredients,
-        on_conflict: :nothing
-      )
+      recipe_ingredients =
+        Enum.map(ingredients, fn {ingredient_id, recipe_ingredient_attrs} ->
+          %{
+            amount: recipe_ingredient_attrs["amount"],
+            recipe_id: recipe.id,
+            ingredient_id: Type.to_integer(ingredient_id),
+            inserted_at: timestamp,
+            updated_at: timestamp
+          }
+        end)
+
+      {count, _} =
+        Repo.insert_all(
+          RecipeIngredient,
+          recipe_ingredients,
+          on_conflict: :nothing
+        )
+
       {:ok, count}
     end)
     |> Repo.transaction()
@@ -179,7 +188,6 @@ defmodule LeodiDashboard.Meal do
   def change_recipe(%Recipe{} = recipe, attrs \\ %{}) do
     Recipe.changeset(recipe, attrs)
   end
-
 
   @doc """
   Returns the list of ingredients.
@@ -290,16 +298,17 @@ defmodule LeodiDashboard.Meal do
   Gets all recipe ingredients for a specific recipe.
   """
   def get_recipe_ingredients!(%Recipe{id: id} = recipe) do
-    q = from(
-      i in Ingredient,
-      join: r_i in "recipe_ingredients",
-      on: r_i.ingredient_id == i.id
-    )
+    q =
+      from(
+        i in Ingredient,
+        join: r_i in "recipe_ingredients",
+        on: r_i.ingredient_id == i.id
+      )
 
     Repo.all(
       from r_i in RecipeIngredient,
-      preload: [ingredient: ^q],
-      where: r_i.recipe_id == ^id
+        preload: [ingredient: ^q],
+        where: r_i.recipe_id == ^id
     )
   end
 

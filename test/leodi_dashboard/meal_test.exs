@@ -20,7 +20,11 @@ defmodule LeodiDashboard.MealTest do
   end
 
   @valid_recipe_attrs %{description: "some description", name: "some name", url: "some url"}
-  @update_recipe_attrs %{description: "some updated description", name: "some updated name", url: "some updated url"}
+  @update_recipe_attrs %{
+    description: "some updated description",
+    name: "some updated name",
+    url: "some updated url"
+  }
   @invalid_recipe_attrs %{description: nil, name: nil, url: nil}
 
   def recipe_fixture(attrs \\ %{}) do
@@ -71,6 +75,7 @@ defmodule LeodiDashboard.MealTest do
     test "update_recipe_with_ingredients/2" do
       %{id: recipe_id} = recipe = recipe_fixture()
       %{id: ingredient_id} = ingredient_fixture()
+
       attrs = %{
         "ingredients" => %{
           ingredient_id => %{
@@ -81,6 +86,7 @@ defmodule LeodiDashboard.MealTest do
       }
 
       Meal.update_recipe_with_ingredients(recipe, attrs)
+
       [
         %RecipeIngredient{
           recipe_id: recipe_id,
@@ -89,7 +95,6 @@ defmodule LeodiDashboard.MealTest do
           grams: true
         }
       ] = Meal.list_recipe_ingredients()
-
     end
 
     test "delete_recipe/1 deletes the recipe" do
@@ -126,13 +131,19 @@ defmodule LeodiDashboard.MealTest do
 
     test "update_ingredient/2 with valid data updates the ingredient" do
       ingredient = ingredient_fixture()
-      assert {:ok, %Ingredient{} = ingredient} = Meal.update_ingredient(ingredient, @update_ingredient_attrs)
+
+      assert {:ok, %Ingredient{} = ingredient} =
+               Meal.update_ingredient(ingredient, @update_ingredient_attrs)
+
       assert ingredient.name == "some updated name"
     end
 
     test "update_ingredient/2 with invalid data returns error changeset" do
       ingredient = ingredient_fixture()
-      assert {:error, %Ecto.Changeset{}} = Meal.update_ingredient(ingredient, @invalid_ingredient_attrs)
+
+      assert {:error, %Ecto.Changeset{}} =
+               Meal.update_ingredient(ingredient, @invalid_ingredient_attrs)
+
       assert ingredient == Meal.get_ingredient!(ingredient.id)
     end
 

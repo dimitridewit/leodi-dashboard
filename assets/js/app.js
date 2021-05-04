@@ -26,6 +26,29 @@ window.liveSocket = liveSocket;
 
 (() => {
   const $navbarBurger = document.querySelector('.navbar-burger');
+  const $addIngredientsButton = document.querySelector('.js-add-ingredients-trigger');
+  const $closeAddIngredients = document.querySelector('.js-close-add-ingredients-modal');
+
+  // For Bulma Modals
+  const openModal = ($target) => $target.classList.add('is-active');
+  const closeModal = ($target) => $target.classList.remove('is-active');
+
+  if ($addIngredientsButton) {
+    const $ingredientsModal = document.getElementById($addIngredientsButton.dataset.target);
+    const $ingredientsModalBackground = document.getElementById($addIngredientsButton.dataset.targetBackground);
+
+    const toggle = () => {
+      if ($ingredientsModal.classList.contains('is-active')) {
+        closeModal($ingredientsModal);
+      } else {
+        openModal($ingredientsModal);
+      }
+    };
+
+    $addIngredientsButton.addEventListener('click', toggle);
+    $closeAddIngredients.addEventListener('click', () => closeModal($ingredientsModal))
+    $ingredientsModalBackground.addEventListener('click', () => closeModal($ingredientsModal))
+  }
 
   if ($navbarBurger) {
     const $target = document.getElementById($navbarBurger.dataset.target);

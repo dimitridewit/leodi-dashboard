@@ -13,7 +13,8 @@ defmodule LeodiDashboard.Meal.Recipe do
     many_to_many(
       :ingredients,
       Ingredient,
-      join_through: RecipeIngredient, on_replace: :delete
+      join_through: RecipeIngredient,
+      on_replace: :delete
     )
 
     field :description, :string

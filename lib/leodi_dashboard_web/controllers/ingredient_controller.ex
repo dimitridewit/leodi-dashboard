@@ -44,7 +44,7 @@ defmodule LeodiDashboardWeb.IngredientController do
       {:ok, ingredient} ->
         conn
         |> put_flash(:info, "Ingredient updated successfully.")
-        |> redirect(to: Routes.ingredient_path(conn, :show, ingredient))
+        |> redirect(to: Routes.ingredient_path(conn, :index))
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "edit.html", ingredient: ingredient, changeset: changeset)

@@ -4,6 +4,7 @@ defmodule LeodiDashboard.Shared.Type do
     case Integer.parse(value) do
       {integer, _remainder} ->
         integer
+
       :error ->
         value
     end

@@ -1,101 +1,133 @@
-<div class="columns">
-
-  <div class="column is-three-quarter-desktop">
-    <h1 class="title"><%= @recipe.name %></h1>
-    <form action="#" phx-submit="update_recipe">
-      <div class="field">
-        <div class="control">
-          <%= label :recipe, :name, class: "label" %>
-          <%= text_input :recipe, :name, class: "input", value: @recipe.name %>
+<div class="container">
+  <h1 class="title"><%= @recipe.name %></h1>
+  <div class="columns">
+    <div class="column">
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-header-title subtitle">Info</h2>
         </div>
-      </div>
-
-      <div class="field">
-        <div class="control">
-          <%= label :recipe, :url, class: "label" %>
-          <%= text_input :recipe, :url, class: "input", value: @recipe.url %>
-        </div>
-      </div>
-
-      <div class="field">
-        <div class="control">
-          <%= label :recipe, :description, class: "label" %>
-          <%= textarea :recipe, :description, class: "input", value: @recipe.description %>
-        </div>
-      </div>
-
-      <%= hidden_input :recipe, :id, value: @recipe.id %>
-      <div class="field">
-        <%= submit "Save", class: "button", phx_disable_with: "Saving.." %>
-      </div>
-    </form>
-
-    <h2 class="subtitle">Ingredients</h2>
-    <table class="table">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Amount</th>
-          <th>Unit</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <%= for recipe_ingredient <- @recipe_ingredients do %>
-          <tr>
-            <td><%= recipe_ingredient.ingredient.name %></td>
-            <td><%= recipe_ingredient.amount %></td>
-            <td>x</td>
-            <td>
-              <form action="#" phx-submit="delete_recipe_ingredient">
-                <%= hidden_input :recipe, :id, value: @recipe.id %>
-                <%= hidden_input :recipe, :recipe_ingredient_id, value: recipe_ingredient.id %>
-                <%= submit "Del", phx_disable_with: "Deleting..", class: "button is-danger" %>
-              </form>
-            </td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
-  </div>
-
-  <div class="column is-half-desktop">
-    <h2 class="subtitle">Add Ingredient</h2>
-    <ul>
-      <%= for ingredient <- @ingredients do %>
-        <li>
-          <h3><%= ingredient.name %></h3>
-          <form action="#" phx-submit="add_recipe_ingredient" class="form">
-            <div class="columns">
-              <div class="column">
-                <%= hidden_input :recipe, :id, value: @recipe.id %>
-                <%= hidden_input :recipe, :ingredient_id, value: ingredient.id %>
-                <div class="field">
-                  <div class="control">
-                    <%= text_input :recipe_ingredient, :amount, value: "", placeholder: "1..", class: "input" %>
-                  </div>
-                </div>
+        <div class="card-content">
+          <form action="#" phx-submit="update_recipe">
+            <div class="field">
+              <div class="control">
+                <%= label :recipe, :name, class: "label" %>
+                <%= text_input :recipe, :name, class: "input", value: @recipe.name %>
               </div>
-              <div class="column">
-                <div class="field">
-                  <div class="control">
-                    <%= for option <- [:mil, :gram, :units, :tablespoon, :teaspoon] do %>
-                      <% html_id = "recipe_ingredient[#{ingredient.id}]_#{option}" %>
-                      <% default_option = :gram %>
-                      <label for="<%= html_id %>", class="radio">
-                        <%= radio_button :recipe, :recipe_ingredient, :amount, class: "radio", id: html_id, checked: option == default_option %>
-                        <%= option %>
-                      </label>
-                    <% end %>
-                  </div>
-                </div>
+            </div>
+
+            <div class="field">
+              <div class="control">
+                <%= label :recipe, :url, class: "label" %>
+                <%= text_input :recipe, :url, class: "input", value: @recipe.url %>
               </div>
-              <div class="column">
-                <%= submit "Add", phx_disable_with: "Adding..", class: "button" %>
+            </div>
+
+            <div class="field">
+              <div class="control">
+                <%= label :recipe, :description, class: "label" %>
+                <%= textarea :recipe, :description, class: "input", value: @recipe.description %>
+              </div>
+            </div>
+
+            <%= hidden_input :recipe, :id, value: @recipe.id %>
+            <div class="field">
+              <%= submit "Save", class: "button is-primary", phx_disable_with: "Saving.." %>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="column">
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-header-title subtitle level-item">Ingredients</h2>
+        </div>
+        <div class="card-content">
+          <div class="level">
+            <div class="level-left">
+              <button class="button is-link level-item" phx-click="toggle-modal">Add ingredients</button>
+            </div>
+          </div>
+          <table class="table" style="width: 100%">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Amount</th>
+                <th>Unit</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <%= for recipe_ingredient <- @recipe_ingredients do %>
+                <tr>
+                  <td><%= recipe_ingredient.ingredient.name %></td>
+                  <td><%= recipe_ingredient.amount %></td>
+                  <td><%= recipe_ingredient.unit %></td>
+                  <td>
+                    <form action="#" phx-submit="delete_recipe_ingredient">
+                      <%= hidden_input :recipe, :id, value: @recipe.id %>
+                      <%= hidden_input :recipe, :recipe_ingredient_id, value: recipe_ingredient.id %>
+                      <%= submit "Del", phx_disable_with: "Deleting..", class: "button is-danger" %>
+                    </form>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal <%= is_active?(@modal_open) %>">
+      <div class="modal-background">
+      </div>
+      <div class="modal-card">
+        <header class="modal-card-head">
+          <p class="modal-card-title">Add Ingredients</p>
+          <button class="delete js-close-add-ingredients-modal" aria-label="close"  phx-click="toggle-modal"></button>
+        </header>
+        <section class="modal-card-body">
+          <form action="#" phx-change="search-ingredients" phx-debounce="2000" class="mb-5">
+            <div class="field">
+              <div class="control">
+                <input type="text" name="search-ingredients" class="input" placeholder="Search ingredients.." />
               </div>
             </div>
           </form>
-        </li>
-      <% end %>
-    </ul>
+          <ul>
+            <%= for ingredient <- @ingredients do %>
+              <li>
+                <form action="#" phx-submit="add_recipe_ingredient" class="form">
+                  <div class="columns">
+                    <div class="column">
+                      <h3><%= ingredient.name %></h3>
+                    </div>
+                    <div class="column">
+                      <%= hidden_input :recipe, :id, value: @recipe.id %>
+                      <%= hidden_input :recipe, :ingredient_id, value: ingredient.id %>
+                      <div class="field">
+                        <div class="control">
+                          <%= text_input :recipe_ingredient, :amount, value: "", placeholder: "1..", class: "input" %>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="column">
+                      <div class="field">
+                        <div class="select">
+                          <%= select :recipe_ingredient, :unit, [:gram, :mil, :units, :tablespoon, :teaspoon] %>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="column">
+                      <%= submit "Add", phx_disable_with: "Adding..", class: "button is-primary" %>
+                    </div>
+                  </div>
+                </form>
+              </li>
+            <% end %>
+          </ul>
+        </section>
+      </div>
+    </div>
   </div>
