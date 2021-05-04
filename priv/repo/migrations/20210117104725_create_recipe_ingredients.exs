@@ -15,8 +15,6 @@ defmodule LeodiDashboard.Repo.Migrations.CreateRecipeIngredients do
 
     create(index(:recipe_ingredients, [:recipe_id]))
     create(index(:recipe_ingredients, [:ingredient_id]))
-    create(
-      unique_index(:recipe_ingredients, [:recipe_id, :ingredient_id])
-    )
+    create(unique_index(:recipe_ingredients, [:recipe_id, :ingredient_id]))
   end
 end

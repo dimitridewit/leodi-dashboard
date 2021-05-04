@@ -1,9 +1,9 @@
 defmodule LeodiDashboard.Users.User do
   use Ecto.Schema
   use Pow.Ecto.Schema
+
   use Pow.Extension.Ecto.Schema,
     extensions: [PowPersistentSession]
-
 
   schema "users" do
     pow_user_fields()

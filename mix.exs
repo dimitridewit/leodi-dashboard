@@ -11,7 +11,7 @@ defmodule LeodiDashboard.MixProject do
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
       deps: deps(),
-      build_embedded: Mix.env == :prod
+      build_embedded: Mix.env() == :prod
     ]
   end
 

@@ -1,34 +1,58 @@
-<h1 class="title"><%= @recipe.name %></h1>
-<ul class="block">
-  <li>
-    <strong>Url:</strong>
-    <%= @recipe.url %>
-  </li>
-</ul>
-<div class="block">
-  <div class="message-body">
-    <p> <%= @recipe.description %></p>
+<div class="container recipe-index">
+  <h1 class="title"><%= @recipe.name %></h1>
+  <div class="columns">
+    <div class="column">
+      <div class="card mb-2">
+        <header class="card-header">
+          <h2 class="card-header-title subtitle">
+            Info
+          </h2>
+        </header>
+        <div class="card-content">
+          <p class="mb-1">
+            <%= @recipe.description %>
+          </p>
+          <p>
+            <a href="<%= @recipe.url %>">
+              <%= @recipe.url %>
+            </a>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="column">
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-header-title subtitle">
+            Ingredients
+          </h2>
+        </div>
+        <div class="card-content">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Amount</th>
+                <th>Unit</th>
+              </tr>
+            </thead>
+            <% ingredients = link_recipe_ingredients(@recipe.ingredients, @recipe_ingredients) %>
+            <tbody>
+              <%= for ingredient <- ingredients do %>
+                <tr>
+                  <td><%= ingredient.name %></td>
+                  <td><%= ingredient.amount %></td>
+                  <td><%= ingredient.unit %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
-<% ingredients = link_recipe_ingredients(@recipe.ingredients, @recipe_ingredients) %>
-<h2 class="subtitle">Ingredients</h2>
-<table class="table">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Amount</th>
-      <th>Unit</th>
-    </tr>
-  </thead>
-  <tbody>
-    <%= for ingredient <- ingredients do %>
-      <tr>
-        <td><%= ingredient.name %></td>
-        <td><%= ingredient.amount %></td>
-        <td><%= ingredient.unit %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+
 

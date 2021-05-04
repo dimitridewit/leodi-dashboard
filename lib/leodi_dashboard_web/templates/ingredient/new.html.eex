@@ -1,5 +1,22 @@
-<h1>New Ingredient</h1>
+<div class="container">
+  <div class="columns">
+    <div class="column">
+      <div class="level">
+        <div class="level-left">
+          <h1 class="title">New Ingredient</h1>
+        </div>
+        <div class="level-right">
+          <%= link "Back", to: Routes.ingredient_path(@conn, :index), class: "button is-link" %>
+        </div>
+      </div>
 
-<%= render "form.html", Map.put(assigns, :action, Routes.ingredient_path(@conn, :create)) %>
+      <div class="card">
+        <div class="card-content">
+          <%= render "form.html", Map.put(assigns, :action, Routes.ingredient_path(@conn, :create)) %>
+        </div>
+      </div>
 
-<span><%= link "Back", to: Routes.ingredient_path(@conn, :index) %></span>
+    </div>
+  </div>
+</div>
+

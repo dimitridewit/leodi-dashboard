@@ -2,6 +2,26 @@
 // @import "./phoenix.css";
 @import 'bulma';
 
+@mixin small-mobile {
+  @media(min-width: 480px) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media(min-width: 768px) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media(min-width: 1024px) {
+    @content;
+  }
+}
+
+@import 'recipe-index';
+
 /* Alerts and form errors */
 .alert {
   padding: 15px;
@@ -47,5 +67,21 @@ $dark-blue: #002b36;
   img {
     display: block;
     width: 64px;
+  }
+}
+
+.modal {
+  .modal-card {
+    background: $white;
+  }
+}
+
+
+.wrapper {
+  background-color: $primary;
+  min-height: 100vh;
+
+  h1 {
+    color: $white;
   }
 }

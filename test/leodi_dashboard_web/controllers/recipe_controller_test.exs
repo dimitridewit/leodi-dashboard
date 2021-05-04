@@ -4,7 +4,11 @@ defmodule LeodiDashboardWeb.RecipeControllerTest do
   alias LeodiDashboard.Meal
 
   @create_attrs %{description: "some description", name: "some name", url: "some url"}
-  @update_attrs %{description: "some updated description", name: "some updated name", url: "some updated url"}
+  @update_attrs %{
+    description: "some updated description",
+    name: "some updated name",
+    url: "some updated url"
+  }
   @invalid_attrs %{description: nil, name: nil, url: nil}
 
   def fixture(:recipe) do
@@ -75,6 +79,7 @@ defmodule LeodiDashboardWeb.RecipeControllerTest do
     test "deletes chosen recipe", %{conn: conn, recipe: recipe} do
       conn = delete(conn, Routes.recipe_path(conn, :delete, recipe))
       assert redirected_to(conn) == Routes.recipe_path(conn, :index)
+
       assert_error_sent 404, fn ->
         get(conn, Routes.recipe_path(conn, :show, recipe))
       end

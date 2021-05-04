@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <%= csrf_meta_tag() %>
     <%= live_title_tag assigns[:page_title] || "LeoDi" %>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
     <link phx-track-static rel="stylesheet" href="<%= Routes.static_path(@conn, "/css/app.css") %>"/>
     <script defer phx-track-static type="text/javascript" src="<%= Routes.static_path(@conn, "/js/app.js") %>"></script>
   </head>
@@ -14,7 +15,7 @@
       <section>
         <nav role="navigation" class="navbar" aria-label="main navigation">
           <div class="navbar-brand">
-            <%= link to: Routes.recipe_path(@conn, :index) do %>
+            <%= link to: Routes.recipe_path(@conn, :index), class: "navbar-item" do %>
               <div class="brand-wrapper">
                 <img src="<%= Routes.static_path(@conn, "/images/motto.png") %>" alt="Motto" />
               </div>
@@ -30,7 +31,7 @@
               <%= link "Recipes", to: Routes.recipe_path(@conn, :index), class: "navbar-item" %>
               <%= link "Ingredients", to: Routes.ingredient_path(@conn, :index), class: "navbar-item" %>
               <%= if Pow.Plug.current_user(@conn) do %>
-                <%= link "Sign out", to: Routes.pow_session_path(@conn, :delete), method: :delete %></span>
+                <%= link "Sign out", to: Routes.pow_session_path(@conn, :delete), method: :delete, class: "navbar-item" %></span>
               <% end %>
             </div>
             <div class="navbar-end">

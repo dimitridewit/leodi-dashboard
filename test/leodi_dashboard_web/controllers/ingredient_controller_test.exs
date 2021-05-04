@@ -56,7 +56,9 @@ defmodule LeodiDashboardWeb.IngredientControllerTest do
     setup [:create_ingredient]
 
     test "redirects when data is valid", %{conn: conn, ingredient: ingredient} do
-      conn = put(conn, Routes.ingredient_path(conn, :update, ingredient), ingredient: @update_attrs)
+      conn =
+        put(conn, Routes.ingredient_path(conn, :update, ingredient), ingredient: @update_attrs)
+
       assert redirected_to(conn) == Routes.ingredient_path(conn, :show, ingredient)
 
       conn = get(conn, Routes.ingredient_path(conn, :show, ingredient))
@@ -64,7 +66,9 @@ defmodule LeodiDashboardWeb.IngredientControllerTest do
     end
 
     test "renders errors when data is invalid", %{conn: conn, ingredient: ingredient} do
-      conn = put(conn, Routes.ingredient_path(conn, :update, ingredient), ingredient: @invalid_attrs)
+      conn =
+        put(conn, Routes.ingredient_path(conn, :update, ingredient), ingredient: @invalid_attrs)
+
       assert html_response(conn, 200) =~ "Edit Ingredient"
     end
   end
@@ -75,6 +79,7 @@ defmodule LeodiDashboardWeb.IngredientControllerTest do
     test "deletes chosen ingredient", %{conn: conn, ingredient: ingredient} do
       conn = delete(conn, Routes.ingredient_path(conn, :delete, ingredient))
       assert redirected_to(conn) == Routes.ingredient_path(conn, :index)
+
       assert_error_sent 404, fn ->
         get(conn, Routes.ingredient_path(conn, :show, ingredient))
       end

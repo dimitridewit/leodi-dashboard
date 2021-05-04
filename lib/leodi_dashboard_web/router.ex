@@ -1,6 +1,7 @@
 defmodule LeodiDashboardWeb.Router do
   use LeodiDashboardWeb, :router
   use Pow.Phoenix.Router
+
   use Pow.Extension.Phoenix.Router,
     extensions: [PowPersistentSession]
 
@@ -40,7 +41,8 @@ defmodule LeodiDashboardWeb.Router do
     get "/", PageController, :index
 
     get "/recipes", RecipeController, :index
-    get "/recipes/new", RecipeController, :new
+    # get "/recipes/new", RecipeController, :new
+    live "/recipes/new", RecipeLive.New, :new
     get "/recipes/:id", RecipeController, :show
     delete "/recipes/:id", RecipeController, :delete
 

@@ -17,5 +17,6 @@ defmodule LeodiDashboard.Meal.RecipeIngredient do
     recipe
     |> cast(attrs, [:recipe_id, :ingredient_id, :amount, :unit])
     |> validate_required([:recipe_id, :ingredient_id, :amount])
+    |> validate_inclusion(:unit, ["mil", "gram", "units", "tablespoon", "teaspoon"])
   end
 end
