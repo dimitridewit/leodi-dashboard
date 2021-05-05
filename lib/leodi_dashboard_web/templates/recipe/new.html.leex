@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container p-4">
   <div class="level">
     <div class="level-left">
       <h1 class="title level-item">New Recipe</h1>
@@ -6,36 +6,40 @@
   </div>
 
   <div class="columns">
-    <div class="column is-three-quarter-desktop">
-      <%= f = form_for @changeset, "#", [phx_submit: :create] %>
-        <div class="field">
-          <div class="control">
-            <%= label f, :name, class: "label" %>
-            <%= text_input f, :name, class: "input" %>
-            <%= error_tag f, :name %>
-          </div>
-        </div>
+    <div class="column">
+      <div class="card">
+        <div class="card-content">
+          <%= f = form_for @changeset, "#", [phx_submit: :create] %>
+            <div class="field">
+              <div class="control">
+                <%= label f, :name, class: "label" %>
+                <%= text_input f, :name, class: "input" %>
+                <%= error_tag f, :name %>
+              </div>
+            </div>
 
-        <div class="field">
-          <div class="control">
-            <%= label f, :url, class: "label" %>
-            <%= text_input f, :url, class: "input" %>
-            <%= error_tag f, :url %>
-          </div>
-        </div>
+            <div class="field">
+              <div class="control">
+                <%= label f, :url, class: "label" %>
+                <%= text_input f, :url, class: "input" %>
+                <%= error_tag f, :url %>
+              </div>
+            </div>
 
-        <div class="field">
-          <div class="control">
-            <%= label f, :description, class: "label" %>
-            <%= textarea f, :description, class: "input" %>
-            <%= error_tag f, :description %>
-          </div>
-        </div>
+            <div class="field">
+              <div class="control">
+                <%= label f, :description, class: "label" %>
+                <%= textarea f, :description, class: "input" %>
+                <%= error_tag f, :description %>
+              </div>
+            </div>
 
-        <div class="field">
-          <%= submit "Save", class: "button", phx_disable_with: "Saving.." %>
+            <div class="field">
+              <%= submit "Save", class: "button", phx_disable_with: "Saving.." %>
+            </div>
+          </form>
         </div>
-      </form>
+      </div>
     </div>
   </div>
 

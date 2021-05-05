@@ -1,38 +1,51 @@
-<section class="phx-hero">
-  <h1><%= gettext "Welcome to %{name}!", name: "Phoenix" %></h1>
-  <p>Peace of mind from prototype to production</p>
-</section>
+<div class="container p-4">
+  <div class="columns p-4">
+    <div class="column">
+      <div class="block">
+        <h1 class="title">RecipeLists</h1>
+        <%= link "New List", to: Routes.recipe_list_new_path(@conn, :new), class: "button is-link level-item" %>
+      </div>
 
-<section class="row">
-  <article class="column">
-    <h2>Resources</h2>
-    <ul>
-      <li>
-        <a href="https://hexdocs.pm/phoenix/overview.html">Guides &amp; Docs</a>
-      </li>
-      <li>
-        <a href="https://github.com/phoenixframework/phoenix">Source</a>
-      </li>
-      <li>
-        <a href="https://github.com/phoenixframework/phoenix/blob/v1.5/CHANGELOG.md">v1.5 Changelog</a>
-      </li>
-    </ul>
-  </article>
-  <article class="column">
-    <h2>Help</h2>
-    <ul>
-      <li>
-        <a href="https://elixirforum.com/c/phoenix-forum">Forum</a>
-      </li>
-      <li>
-        <a href="https://webchat.freenode.net/?channels=elixir-lang">#elixir-lang on Freenode IRC</a>
-      </li>
-      <li>
-        <a href="https://twitter.com/elixirphoenix">Twitter @elixirphoenix</a>
-      </li>
-      <li>
-        <a href="https://elixir-slackin.herokuapp.com/">Elixir on Slack</a>
-      </li>
-    </ul>
-  </article>
-</section>
+      <div class="tile is-ancestor">
+        <div class="tile is-vertical">
+          <div class="tile">
+            <div class="tile is-parent is-vertical">
+              <div class="tile is-child">
+                <%= for recipe_list <- @recipe_lists do %>
+                  <a href="<%= Routes.recipe_list_path(@conn, :show, recipe_list) %>" class="tile notification is-warning">
+                    <h2 class="subtitle">
+                      <%= recipe_list.name %>
+                    </h2>
+                  </a>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="block">
+      <h1 class="title">Recipes</h1>
+      <%= link "New Recipe", to: Routes.recipe_new_path(@conn, :new), class: "button is-link level-item" %>
+      </div>
+
+      <div class="tile is-ancestor">
+        <div class="tile is-vertical">
+          <div class="tile">
+            <div class="tile is-parent is-vertical">
+              <div class="tile is-child">
+                <%= for recipe <- @recipes do %>
+                  <a href="<%= Routes.recipe_path(@conn, :show, recipe) %>" class="tile notification is-danger">
+                    <h2 class="subtitle">
+                      <%= recipe.name %>
+                    </h2>
+                  </a>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

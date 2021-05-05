@@ -31,8 +31,6 @@ defmodule LeodiDashboardWeb.RecipeLive.New do
         }
 
       {:error, changeset} ->
-        IO.inspect(changeset)
-
         {
           :noreply,
           assign(socket, changeset: changeset)

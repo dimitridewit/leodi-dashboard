@@ -15,7 +15,7 @@
       <section>
         <nav role="navigation" class="navbar" aria-label="main navigation">
           <div class="navbar-brand">
-            <%= link to: Routes.recipe_path(@conn, :index), class: "navbar-item" do %>
+            <%= link to: Routes.page_path(@conn, :index), class: "navbar-item" do %>
               <div class="brand-wrapper">
                 <img src="<%= Routes.static_path(@conn, "/images/motto.png") %>" alt="Motto" />
               </div>
@@ -30,6 +30,7 @@
             <div class="navbar-start">
               <%= link "Recipes", to: Routes.recipe_path(@conn, :index), class: "navbar-item" %>
               <%= link "Ingredients", to: Routes.ingredient_path(@conn, :index), class: "navbar-item" %>
+              <%= link "RecipeLists", to: Routes.recipe_list_path(@conn, :index), class: "navbar-item" %>
               <%= if Pow.Plug.current_user(@conn) do %>
                 <%= link "Sign out", to: Routes.pow_session_path(@conn, :delete), method: :delete, class: "navbar-item" %></span>
               <% end %>

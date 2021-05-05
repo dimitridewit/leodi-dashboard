@@ -1,0 +1,30 @@
+<div class="container p-4">
+  <div class="level">
+    <div class="level-left">
+      <h1 class="title level-item">New RecipeList</h1>
+    </div>
+  </div>
+
+  <div class="columns">
+    <div class="column is-three-quarter-desktop">
+      <div class="card">
+        <div class="card-content">
+          <%= f = form_for @changeset, "#", [phx_submit: :create] %>
+            <div class="field">
+              <div class="control">
+                <%= label f, :name, class: "label" %>
+                <%= text_input f, :name, class: "input" %>
+                <%= error_tag f, :name %>
+              </div>
+            </div>
+
+            <div class="field">
+              <%= submit "Save", class: "button is-primary", phx_disable_with: "Saving.." %>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

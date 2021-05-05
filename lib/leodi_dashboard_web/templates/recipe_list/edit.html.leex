@@ -1,0 +1,115 @@
+<div class="container p-4">
+  <h1 class="title"><%= @recipe_list.name %></h1>
+  <div class="columns">
+    <div class="column">
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-header-title subtitle">Info</h2>
+        </div>
+        <div class="card-content">
+          <form action="#" phx-submit="update_recipe">
+            <div class="field">
+              <div class="control">
+                <%= label :recipe_list, :name, class: "label" %>
+                <%= text_input :recipe_list, :name, class: "input", value: @recipe_list.name %>
+              </div>
+            </div>
+
+            <%= hidden_input :recipe, :id, value: @recipe_list.id %>
+            <div class="field">
+              <%= submit "Save", class: "button is-primary", phx_disable_with: "Saving.." %>
+            </div>
+          </form>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-header-title">
+              Recipes
+            </h2>
+          </div>
+          <div class="card-content">
+            <table class="table" style="width: 100%">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <%= for recipe_list_recipe <- @recipe_list_recipes do %>
+                  <tr>
+                    <td>
+                      <%= recipe_list_recipe.recipe.name %>
+                    </td>
+                    <td>
+                      <form action="#" phx-submit="delete_recipe_list_recipe">
+                        <%= hidden_input :recipe_list, :id, value: @recipe_list.id %>
+                        <%= hidden_input :recipe_list_recipe, :id, value: recipe_list_recipe.id %>
+                        <%= submit "Del", phx_disable_with: "Deleting..", class: "button is-danger" %>
+                      </form>
+                    </td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="column">
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-header-title subtitle level-item">Recipes</h2>
+        </div>
+        <div class="card-content">
+          <div class="level">
+            <div class="level-left">
+              <button class="button is-link level-item" phx-click="toggle-modal">Add Recipes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="modal <%= is_active?(@modal_open) %>">
+      <div class="modal-background">
+      </div>
+      <div class="modal-card">
+        <header class="modal-card-head">
+          <p class="modal-card-title">Add Recipes</p>
+          <button class="delete" aria-label="close"  phx-click="toggle-modal"></button>
+        </header>
+        <section class="modal-card-body">
+          <form action="#" phx-change="search-recipes" phx-debounce="2000" class="mb-5">
+            <div class="field">
+              <div class="control">
+                <input type="text" name="search-recipes" class="input" placeholder="Search ingredients.." />
+              </div>
+            </div>
+          </form>
+          <ul>
+            <%= for recipe <- @recipes do %>
+              <li>
+                <form action="#" phx-submit="add_recipe" class="form">
+                  <div class="columns">
+                    <div class="column">
+                      <h3><%= recipe.name %></h3>
+                    </div>
+                    <div class="column">
+                    </div>
+                    <div class="column">
+                      <%= hidden_input :recipe, :id, value: recipe.id %>
+                      <%= hidden_input :recipe_list, :id, value: @recipe_list.id %>
+                      <%= submit "Add", phx_disable_with: "Adding..", class: "button is-primary" %>
+                    </div>
+                  </div>
+                </form>
+              </li>
+            <% end %>
+          </ul>
+        </section>
+      </div>
+    </div>
+  </div>
