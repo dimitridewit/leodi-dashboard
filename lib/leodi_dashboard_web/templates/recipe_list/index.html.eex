@@ -1,0 +1,33 @@
+<div class="container p-4">
+  <div class="level">
+    <div class="level-left">
+      <h1 class="title level-item">Recipe Lists</h1>
+    </div>
+    <div class="level-right">
+      <%= link "New Recipe List", to: Routes.recipe_list_new_path(@conn, :new), class: "button is-link level-item" %>
+    </div>
+  </div>
+
+  <div class="columns">
+    <div class="column recipe-list">
+      <%= for recipe_list <- @recipe_lists do %>
+        <div class="card mb-2 recipe-list-item">
+          <header class="card-header">
+            <h2 class="card-header-title subtitle">
+              <%= recipe_list.name %>
+            </h2>
+          </header>
+          <div class="card-content">
+            <div class="content">
+            </div>
+          </div>
+          <footer class="card-footer">
+            <%= link "Show", to: Routes.recipe_list_path(@conn, :show, recipe_list), class: "card-footer-item" %>
+            <%= link "Edit", to: Routes.recipe_list_edit_path(@conn, :edit, recipe_list), class: "card-footer-item" %>
+            <%= link "Delete", to: Routes.recipe_list_path(@conn, :delete, recipe_list), method: :delete, data: [confirm: "Are you sure?"], class: "card-footer-item" %>
+          </footer>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

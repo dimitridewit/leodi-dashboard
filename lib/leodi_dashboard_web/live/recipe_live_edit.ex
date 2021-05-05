@@ -111,9 +111,6 @@ defmodule LeodiDashboardWeb.RecipeLive.Edit do
     {:noreply, socket |> assign(:modal_open, false)}
   end
 
-  def is_active?(true), do: "is-active"
-  def is_active?(_), do: ""
-
   defp filter_recipe_ingredients(ingredients, recipe_ingredients) do
     Enum.filter(ingredients, fn ingredient ->
       case Enum.find(recipe_ingredients, fn r_i ->
@@ -134,7 +131,7 @@ defmodule LeodiDashboardWeb.RecipeLive.Edit do
       |> filter_recipe_ingredients(recipe_ingredients)
 
     socket
-    |> assign(:recipe, Meal.get_recipe!(recipe_id))
+    |> assign(:recipe, recipe)
     |> assign(:recipe_ingredients, recipe_ingredients)
     |> assign(:ingredients, ingredients)
   end

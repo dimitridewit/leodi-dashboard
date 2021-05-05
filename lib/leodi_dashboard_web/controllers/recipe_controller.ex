@@ -82,7 +82,6 @@ defmodule LeodiDashboardWeb.RecipeController do
           false
         end
       end)
-      |> IO.inspect()
 
     params |> Map.put("ingredients", updated_ingredients)
   end

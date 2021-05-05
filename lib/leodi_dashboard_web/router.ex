@@ -48,6 +48,12 @@ defmodule LeodiDashboardWeb.Router do
 
     live "/recipes/:id/edit", RecipeLive.Edit, :edit
 
+    get "/recipe_lists", RecipeListController, :index
+    live "/recipe_lists/new", RecipeListLive.New, :new
+    live "/recipe_lists/:id/edit", RecipeListLive.Edit, :edit
+    get "/recipe_lists/:id", RecipeListController, :show
+    delete "/recipe_list/:id", RecipeListController, :delete
+
     resources "/ingredients", IngredientController
     resources "/recipe-ingredients", RecipeIngredientController, only: [:delete]
   end
